@@ -9,17 +9,17 @@ export default function App() {
   const [age, setAge] = useState(0);
   const [pass, setPass] = useState('');
   const [submit, setSubmit] = useState([]); // state for submissions
-  const [valid, setValid] = useState({name:false,age:false,pass:false}); // object of each input and validations results
+  const [valid, setValid] = useState({ name: false, age: false, pass: false }); // object of each input and validations results
 
   const submition = () => {
     setSubmit([...'test']);
-    if(!Object.values(valid).includes(false)){
-      alert('Done')
+    if (!Object.values(valid).includes(false)) {
+      alert('Done');
       /**
        * do here your successfull submission code
        */
-    }else{
-      alert('Data missing')
+    } else {
+      alert('Data missing');
       /**
        * do here your unsuccessfull submission code
        */
@@ -29,7 +29,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <TextBox
-        placeholder="name"
+        placeholder="الاسم"
         initValue={name}
         submit={submit}
         required={true}
@@ -37,10 +37,13 @@ export default function App() {
         onChange={(text) => {
           setName(text);
         }}
-        onValid={(val)=>{setValid({...valid,name:val})}}
+        onValid={(val) => {
+          setValid({ ...valid, name: val });
+        }}
+        errMsg="لايمكن أن يكون فارغاَ"
       />
       <TextBox
-        placeholder="age"
+        placeholder="العمر"
         initValue={age}
         submit={submit}
         required={true}
@@ -48,10 +51,13 @@ export default function App() {
         onChange={(text) => {
           setAge(text);
         }}
-        onValid={(val)=>{setValid({...valid,age:val})}}
+        onValid={(val) => {
+          setValid({ ...valid, age: val });
+        }}
+        errMsg="أكبر من 0"
       />
       <TextBox
-        placeholder="password"
+        placeholder="كلمة المرور"
         initValue={pass}
         submit={submit}
         required={true}
@@ -59,7 +65,10 @@ export default function App() {
         onChange={(text) => {
           setPass(text);
         }}
-        onValid={(val)=>{setValid({...valid,pass:val})}}
+        onValid={(val) => {
+          setValid({ ...valid, pass: val });
+        }}
+        errMsg="يجب أن يكون رقما"
       />
       <Button
         title="save"
