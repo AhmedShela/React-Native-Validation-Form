@@ -19,6 +19,7 @@ import { View, TextInput, StyleSheet, Text } from 'react-native';
 const TextBox = (props) => {
   const [text, setText] = useState('');
   const [boderColor, setBorderColor] = useState('gray');
+  const [errMsg, setErrorMsg] = useState(false);
 
   function changeTextHandler(value) {
     props.onChange(value);
@@ -27,7 +28,7 @@ const TextBox = (props) => {
 
   const styles = StyleSheet.create({
     container: {
-      height: 45,
+      height: 50,
       position: 'relative',
       width: props.width || 300,
     },
@@ -61,13 +62,14 @@ const TextBox = (props) => {
   });
 
   function validation(textValue) {
-    console.log('now',isNaN(textValue));
-    if (textValue.toString().length == 0) {
+    console.log('now', isNaN(textValue));
+    if (textValue.toString().trim().length == 0) {
       // if the textBox is empty
       if (props.required) {
         setBorderColor('red');
         console.log('1');
-          props.onValid(false);
+        props.onValid(false);
+        setErrorMsg(true);
         return;
       }
     }
@@ -78,21 +80,24 @@ const TextBox = (props) => {
           setBorderColor('red');
           console.log('2');
           props.onValid(false);
+          setErrorMsg(true);
           return;
         }
         break;
       case 'valueableNumber':
         if (isNaN(textValue)) {
-          console.log('3',typeof(textValue));
-          console.log('3',textValue);
+          console.log('3', typeof textValue);
+          console.log('3', textValue);
           setBorderColor('red');
           props.onValid(false);
+          setErrorMsg(true);
           return;
         }
         if (Number(textValue) <= 0) {
           setBorderColor('red');
-          console.log('4',Number(textValue));
+          console.log('4', Number(textValue));
           props.onValid(false);
+          setErrorMsg(true);
           return;
         }
         break;
@@ -101,7 +106,8 @@ const TextBox = (props) => {
     // }
     if (boderColor !== 'gray') {
       setBorderColor('gray');
-      props.onValid(true)
+      props.onValid(true);
+      setErrorMsg(false);
     }
   }
 
@@ -113,14 +119,15 @@ const TextBox = (props) => {
   return (
     <View style={styles.container}>
       <View
-        style={
+        style={[
           props.language == 'en'
             ? styles.labelContainerL
             : styles.labelContainerR
-        }>
+        ,{flexDirection:'row'}]}>
         <Text style={{ color: 'gray', paddingHorizontal: 5 }}>
           {props.placeholder || 'lable'}
         </Text>
+        <Text style={{ color: 'red' }}>{errMsg ? `  (${props.errMsg})` : ''}</Text>
       </View>
 
       <TextInput
