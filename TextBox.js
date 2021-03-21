@@ -23,6 +23,7 @@ const TextBox = (props) => {
 
   function changeTextHandler(value) {
     props.onChange(value);
+    console.log('Hi')
     validation(value);
   }
 
@@ -62,7 +63,7 @@ const TextBox = (props) => {
   });
 
   function validation(textValue) {
-    console.log('now', isNaN(textValue));
+    // console.log('now', isNaN(textValue));
     if (textValue.toString().trim().length == 0) {
       // if the textBox is empty
       if (props.required) {
@@ -102,13 +103,13 @@ const TextBox = (props) => {
         }
         break;
     }
-
     // }
-    if (boderColor !== 'gray') {
-      setBorderColor('gray');
+    // if (boderColor !== 'gray') {
+      console.log('logggggg')
+      setBorderColor('green');
       props.onValid(true);
       setErrorMsg(false);
-    }
+    // }
   }
 
   if (boderColor == 'gray') {
